@@ -1,0 +1,70 @@
+---
+title: "Shinylive in quarto"
+format: html
+filters:
+  - shinylive
+---
+
+This is a Quarto website.
+
+To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+
+library(shiny)
+library(bslib)
+
+ui <- page_fluid(
+  sliderInput("n", "N", 0, 100, 40),
+  verbatimTextOutput("txt")
+)
+
+server <- function(input, output, session) {
+  output$txt <- renderText({
+    sprintf("The value of n*2 is %s", input$n * 2)
+  })
+}
+
+shinyApp(ui, server)
+```
+
+```{shinylive-python}
+#| standalone: true
+#| components: [editor, viewer]
+
+from shiny import *
+
+app_ui = ui.page_fluid(
+    ui.input_slider("n", "N", 0, 100, 40),
+    ui.output_text_verbatim("txt"),
+)
+
+def server(input, output, session):
+    @output
+    @render.text
+    def txt():
+        return f"The value of n*2 is {input.n() * 2}"
+
+app = App(app_ui, server)
+
+```
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer, editor]
+#| viewerHeight: 800
+#| editorHeight: 200
+#| layout: vertical
+
+library(teal)
+
+app <- init(
+  data = teal_data(IRIS = iris, MTCARS = mtcars),
+  modules = example_module()
+)
+
+shinyApp(app$ui, app$server)
+```
