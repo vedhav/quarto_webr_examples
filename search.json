@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "code_chunk.html",
+    "href": "code_chunk.html",
+    "title": "Code chunk",
+    "section": "",
+    "text": "Write a function to plot a histogram 1,000 random points that follow a normal distribution."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Shinylive in quarto",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n#| standalone: true\n#| components: [editor, viewer]\n\nlibrary(shiny)\nlibrary(bslib)\n\nui &lt;- page_fluid(\n  sliderInput(\"n\", \"N\", 0, 100, 40),\n  verbatimTextOutput(\"txt\")\n)\n\nserver &lt;- function(input, output, session) {\n  output$txt &lt;- renderText({\n    sprintf(\"The value of n*2 is %s\", input$n * 2)\n  })\n}\n\nshinyApp(ui, server)\n#| standalone: true\n#| components: [editor, viewer]\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 40),\n    ui.output_text_verbatim(\"txt\"),\n)\n\ndef server(input, output, session):\n    @output\n    @render.text\n    def txt():\n        return f\"The value of n*2 is {input.n() * 2}\"\n\napp = App(app_ui, server)\n\n#| standalone: true\n#| components: [viewer, editor]\n#| viewerHeight: 800\n#| editorHeight: 200\n#| layout: vertical\n\nlibrary(teal)\n\napp &lt;- init(\n  data = teal_data(IRIS = iris, MTCARS = mtcars),\n  modules = example_module()\n)\n\nshinyApp(app$ui, app$server)"
+  }
+]
